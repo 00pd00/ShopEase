@@ -1,13 +1,25 @@
-import { configureStore } from "@reduxjs/toolkit";
-import cartReducer from "./cartSlice"
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage"; 
+import cartReducer from "./cartSlice";
 
-// creating the Redux store
-const appStore = configureStore({
-    // this is the app reducer and contains small reducers
-    // each slices will have their own reducer
-    reducer:{
-        cart:cartReducer
-    }
-})
+const persistConfig = {
+  key: "root",
+  storage,
+};
 
-export default appStore;
+
+const rootReducer = combineReducers({
+  cart: cartReducer,
+});
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+const store = configureStore({
+  reducer: persistedReducer,
+  });
+
+const persistor = persistStore(store);
+
+export { store, persistor };
+

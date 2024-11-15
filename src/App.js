@@ -4,18 +4,23 @@ import Header from './Components/Header';
 import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
 import ItemCard from './Components/ItemCard';
 import ErrorPage from './Components/ErrorPage';
-import appStore from "./utils/appStore";
+import {store , persistor} from "./utils/appStore";
 import { Provider } from "react-redux";
 import Cart from './Components/Cart';
 import ItemPage from './Components/ItemPage';
+import { PersistGate } from 'redux-persist/integration/react'
+
 
 const App = () => {
   return (
-    <Provider store={appStore} >
-      <div>
+    <Provider store={store} >
+      <PersistGate persistor={persistor}>
+        <div>
       <Header />
       <Outlet/>
-    </div>
+      </div>
+      </PersistGate>
+      
     </Provider>
     
   );

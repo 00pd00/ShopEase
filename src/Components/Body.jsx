@@ -8,7 +8,6 @@ const Body = () => {
     const data = await fetch("https://api.escuelajs.co/api/v1/products");
     const json = await data.json();
     setApiData(json);
-    console.log(json)
   };
 
   useEffect(() => {

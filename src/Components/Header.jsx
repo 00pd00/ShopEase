@@ -10,17 +10,13 @@ const Header = () => {
         <div className="flex">
           <div>
             <img
-            className="w-28 rounded-md "
-            src={
-              "https://thumbs.dreamstime.com/b/minimalist-white-orange-logo-against-stark-black-background-conceptualize-premium-clothing-brand-online-presence-315284128.jpg"
-            }
-          />
+              className="w-28 rounded-md "
+              src={
+                "https://thumbs.dreamstime.com/b/minimalist-white-orange-logo-against-stark-black-background-conceptualize-premium-clothing-brand-online-presence-315284128.jpg"
+              }
+            />
           </div>
-          <div className="text-white absolute p-10 mx-16">
-            ShopEase
-          </div>
-          
-          
+          <div className="text-white absolute p-10 mx-16">ShopEase</div>
         </div>
         <div className="flex items-center">
           <ul className="flex p-4 m-4 ali text-white ">

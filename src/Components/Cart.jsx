@@ -50,7 +50,7 @@ const Cart = () => {
         <div className="my-3">
           {cart.length !== 0
             ? <div className="font-bold text-xl">
-                Total: {totalPrice}/-
+                Total: ₹{totalPrice}
               </div>
             : <div>Cart is empty! Please add any product in the cart</div>}
         </div>
@@ -61,7 +61,7 @@ const Cart = () => {
           <div className="text-xl flex justify-between items-center">
             <img className="w-[100px] rounded-md" src={item.images[0]} alt="" />
             <span>
-              {item.title} - {item.quantity} x {item.price}/- ={" "}
+              {item.title} - {item.quantity} x ₹{item.price} = ₹{""}
               {item.totalPrice}/-
             </span>
           </div>

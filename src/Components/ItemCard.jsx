@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 
 const ItemCard = props => {
   const { ApiData } = props;
-  const SlicedData = ApiData.slice(2, 100);
+  const SlicedData = ApiData.slice(2, 40);
   const dispatch = useDispatch();
 
   const [addedItems, setAddedItems] = useState([]);
@@ -18,7 +18,7 @@ const ItemCard = props => {
   return (
     <div>
       <div className="flex flex-wrap gap-4">
-        <div className="flex flex-wrap gap-4">
+        <div className="md:grid md:grid-cols-4 md:gap-4 md:max-w-7xl md:mx-auto md:px-4 md:py-4">
           {SlicedData.map(item =>
             <div key={item.id}>
               <Link

@@ -18,16 +18,14 @@ const Body = () => {
  
 
   return (
-    <div className="bg-white dark:bg-gray-900 min-h-screen text-gray-900 dark:text-gray-100">
+    <div className="md:bg-white bg-gray-100 dark:bg-gray-900 min-h-screen text-gray-900 dark:text-gray-100">
       <Header />
       
-      <div className="p-2">
         
         <div className="p-2">
           <ItemCard ApiData={ApiData} />
         </div>
       </div>
-    </div>
   );
 };
 

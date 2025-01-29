@@ -2,10 +2,13 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { auth } from "../utils/firebase";
+import { Menu, X } from "lucide-react";
+import Logo from "../Logo.webp";
 
 const Header = () => {
   const [categories, setcategories] = useState([]);
   const [DarkMode, setDarkMode] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const cart = useSelector(store => store.cart.items);
   const username = auth.currentUser;
@@ -26,71 +29,96 @@ const Header = () => {
   }, []);
 
   return (
-    <div className="-my-3 -mx-2 w-full ">
-      <div className=" flex w-full justify-between bg-[#272a32] shadow-lg m-2   ">
-        <div className="flex">
-          <Link to={"/"}>
-            <img
-              alt="img"
-              className="w-28 rounded-md "
-              src={
-                "https://thumbs.dreamstime.com/b/minimalist-white-orange-logo-against-stark-black-background-conceptualize-premium-clothing-brand-online-presence-315284128.jpg"
-              }
-            />
+    <header className="md:w-[104.7%] w-[110%] -mx-4  md:-mx-8 bg-[#272a32] text-white shadow-lg">
+      <div className="flex justify-between space-x-4 items-center max-w-8xl mx-auto px-4 py-4">
+        <div className="flex items-center">
+          <Link to="/">
+            <img alt="ShopEase Logo" className="w-20 rounded-md" src={Logo} />
           </Link>
-          <Link to={"/"} className="text-white absolute p-10 mx-16">
+          <Link to="/" className="text-2xl font-bold ml-3">
             ShopEase
           </Link>
         </div>
-        <div className="text-white absolute mx-[200px]  space-x-4 py-10   ">
+
+        <nav className="hidden md:flex space-x-6">
           {categories.map((item, index) =>
-            <Link key={index} to={"/" + item.name}>
+            <Link key={index} to={`/${item.name}`} className="hover:underline">
               {item.name}
             </Link>
           )}
-        </div>
+        </nav>
 
-        <div className="flex items-center">
-          <ul className="flex p-4 m-4 text-white ">
-            <li className="px-4">
-              <button onClick={toggleDarkMode}>
-                {DarkMode ? "Dark" : "Light"}
-              </button>
-            </li>
-            <li>|</li>
-            <li className="px-4">
-              <Link to="/">Home</Link>
-            </li>
-            <li>|</li>
-            <li className="px-4">
-              <Link to="/cart">
-                Cart({cart.length})
+        <div className="hidden md:flex items-center space-x-4">
+          <button
+            onClick={toggleDarkMode}
+            className="px-3 py-1 rounded hover:bg-gray-700"
+          >
+            {DarkMode ? "Dark" : "Light"}
+          </button>
+          <Link to="/cart" className="px-3 hover:underline">
+            Cart ({cart.length})
+          </Link>
+          {username
+            ? <Link to="/Login" className="flex items-center">
+                <img
+                  src="https://icon-library.com/images/profile-icon-white/profile-icon-white-1.jpg"
+                  className="w-8 h-8 rounded-full"
+                  alt="User"
+                />
+                <span className="ml-2">
+                  {username.displayName}
+                </span>
               </Link>
-            </li>
-            <li>|</li>
-
-            <li className="px-4">
-              {username != null
-                ? <div>
-                    <Link to="/Login">
-                      <img
-                        src="https://icon-library.com/images/profile-icon-white/profile-icon-white-1.jpg"
-                        className="w-8 p-1 -my-1"
-                        alt="img"
-                      />
-                      <span className=" absolute mx-1">
-                        {username.displayName}
-                      </span>
-                    </Link>
-                  </div>
-                : <div>
-                    <Link to="/Signup">SignUp</Link>
-                  </div>}
-            </li>
-          </ul>
+            : <Link to="/Signup" className="px-3 hover:underline">
+                SignUp
+              </Link>}
         </div>
+
+        <button className="md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
+          {menuOpen
+            ? <X className="text-white w-6 h-6" />
+            : <Menu className="text-white w-6 h-6" />}
+        </button>
       </div>
-    </div>
+
+      {menuOpen &&
+        <div className="md:hidden bg-[#272a32] text-white space-y-3 p-4">
+          <nav className="flex flex-col space-y-2">
+            {categories.map((item, index) =>
+              <Link
+                key={index}
+                to={`/${item.name}`}
+                className="hover:underline"
+              >
+                {item.name}
+              </Link>
+            )}
+          </nav>
+          <button
+            onClick={toggleDarkMode}
+            className="w-full py-2 rounded hover:bg-gray-700"
+          >
+            {DarkMode ? "Dark Mode" : "Light Mode"}
+          </button>
+          <Link to="/cart" className="block hover:underline">
+            Cart ({cart.length})
+          </Link>
+          {username
+            ? <Link to="/Login" className="flex items-center space-x-2">
+                <img
+                  src="https://icon-library.com/images/profile-icon-white/profile-icon-white-1.jpg"
+                  className="w-8 rounded-full"
+                  alt="User"
+                />
+                <span>
+                  {username.displayName}
+                </span>
+              </Link>
+            : <Link to="/Signup" className="block hover:underline">
+                SignUp
+              </Link>}
+        </div>}
+    </header>
   );
 };
 

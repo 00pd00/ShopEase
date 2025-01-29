@@ -34,6 +34,7 @@ const Cart = () => {
     }, []);
     return grouped;
   };
+
   useEffect(
     () => {
       if (cart.length !== 0) {
@@ -56,14 +57,14 @@ const Cart = () => {
   };
 
   return (
-    <div className="bg-white h-screen dark:bg-gray-900 text-black dark:text-white" >
-      <Header/>
-      <div className="mx-4 w-auto  ">
-        <div className="flex justify-between">
+    <div className="bg-white dark:bg-gray-900 dark:text-white">
+      <Header />
+      <div className="mx-4 w-auto">
+        <div className="md:flex md:justify-between">
           <div className="font-bold text-5xl">Cart</div>
           <div className="my-3">
             {cart.length !== 0
-              ? <div className="font-bold text-xl">
+              ? <div className="flex font-bold text-xl">
                   Total: ₹{totalPrice}
                 </div>
               : <div>Cart is empty! Please add any product in the cart</div>}
@@ -72,7 +73,7 @@ const Cart = () => {
 
         {groupedCart.map(item =>
           <div className="my-10" key={item.id}>
-            <div className="text-xl flex justify-between items-center">
+            <div className="text-xl md:flex md:justify-between items-center">
               <img
                 className="w-[100px] rounded-md"
                 src={item.images[0]}
@@ -89,7 +90,7 @@ const Cart = () => {
         {cart.length !== 0 &&
           <div className="flex">
             <button
-              className="my-5 bg-[#272a32] text-white  rounded-md"
+              className="my-5 bg-[#272a32] text-white rounded-md"
               onClick={handleClearCart}
             >
               Clear Cart
@@ -97,10 +98,10 @@ const Cart = () => {
             <div className="mx-5">
               <button className=" " onClick={togglepanel}>
                 {!variable
-                  ? <button className="my-5 p-2 bg-[#272a32] text-white  rounded-md">
+                  ? <button className="my-5 p-2 bg-[#272a32] text-white rounded-md">
                       Checkout
                     </button>
-                  : <button className="my-5 p-2 bg-[#272a32] text-white  rounded-md">
+                  : <button className="my-5 p-2 bg-[#272a32] text-white rounded-md">
                       Close
                     </button>}
               </button>
@@ -115,8 +116,7 @@ const Cart = () => {
                   {groupedCart.map((item, index) => {
                     return (
                       <div key={index} className="flex my-5 ">
-                        {index + 1} -
-                        {item.title}
+                        {index + 1} -{item.title}
                       </div>
                     );
                   })}

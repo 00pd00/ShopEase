@@ -4,7 +4,7 @@ import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-800 text-white py-8">
+    <div className=" bg-gray-800 md:w-[104.7%] w-[110%]  -mx-4  md:-mx-8 text-white py-8">
       <div className="max-w-7xl mx-auto px-4 md:flex md:justify-between">
         {/* Company Info */}
         <div>
@@ -59,7 +59,7 @@ const Footer = () => {
       <div className="mt-8 text-center text-gray-500">
         © 2025 ShopEase. All Rights Reserved.
       </div>
-    </footer>
+    </div>
   );
 };
 

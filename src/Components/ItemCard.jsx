@@ -1,14 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { addItem } from "../utils/cartSlice";
 import { useDispatch } from "react-redux";
 
 const ItemCard = props => {
   const { ApiData } = props;
-  const SlicedData = ApiData.slice(4, 40);
+  const SlicedData = ApiData.slice(2, 100);
   const dispatch = useDispatch();
+
+  const [addedItems, setAddedItems] = useState([]);
+
   const handleAddItems = item => {
     dispatch(addItem(item));
+    setAddedItems(prev => [...prev, item.id]); 
   };
 
   return (
@@ -16,15 +20,13 @@ const ItemCard = props => {
       <div className="flex flex-wrap gap-4">
         <div className="flex flex-wrap gap-4">
           {SlicedData.map(item =>
-            <div>
+            <div key={item.id}>
               <Link
                 to={"/itempage/" + item.id}
-                key={item.id}
                 className="cursor-default"
               >
                 <div
-                  key={item.id}
-                  className="m-4 p-4 w-[300px] h-[350px] bg-gray-200 rounded-md hover:bg-gray-300 flex flex-col"
+                  className="m-4 p-4 w-[300px] h-[350px] dark:bg-black bg-gray-200 rounded-md hover:bg-gray-300 flex flex-col"
                 >
                   <div className="mb-2 flex relative">
                     <img
@@ -43,12 +45,16 @@ const ItemCard = props => {
                 </div>
               </Link>
               <div className="absolute my-[-60px] mx-[15px] ">
-                <button
-                  onClick={() => handleAddItems(item)}
-                  className="my-2 mx-2 border-2 rounded-md bg-blue-950 text-white border-black "
-                >
-                  Add+
-                </button>
+                {addedItems.includes(item.id) ? (
+                  <div className="text-green-600 font-bold p-2">Added ✓</div>
+                ) : (
+                  <button
+                    onClick={() => handleAddItems(item)}
+                    className="my-2 mx-2 border-2 rounded-md bg-blue-950 text-white border-black"
+                  >
+                    Add+
+                  </button>
+                )}
               </div>
             </div>
           )}

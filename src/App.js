@@ -1,6 +1,5 @@
 import './App.css';
 import Body from './Components/Body';
-import Header from './Components/Header';
 import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
 import ItemCard from './Components/ItemCard';
 import ErrorPage from './Components/ErrorPage';
@@ -9,22 +8,36 @@ import { Provider } from "react-redux";
 import Cart from './Components/Cart';
 import ItemPage from './Components/ItemPage';
 import { PersistGate } from 'redux-persist/integration/react'
+import Shoes from './Components/Shoes';
+import Clothes from './Components/Clothes';
+import Electronics from './Components/Electronics';
+import Furniture from './Components/Furniture';
+import Miscellaneous from './Components/Miscellaneous';
+import Checkout from './Components/Checkout';
+import Login from './Components/Login';
+import Signup from './Components/Signup';
+import Footer from './Components/Footer';
+
+
 
 
 const App = () => {
+
+
   return (
     <Provider store={store} >
       <PersistGate persistor={persistor}>
-        <div>
-      <Header />
-      <Outlet/>
+        <div className=' md:min-w-full min-h-screen' >
+      
+      <Outlet  />
+      <Footer/>
       </div>
       </PersistGate>
       
     </Provider>
     
   );
-}
+} 
 
 const appRouter = createBrowserRouter([
   {
@@ -53,6 +66,56 @@ const appRouter = createBrowserRouter([
       {
         path:"/item",
         element:<ItemCard/>,
+        errorElement:<ErrorPage/>,
+
+      }
+      ,
+      {
+        path:"/shoes",
+        element: <Shoes/>,
+        errorElement:<ErrorPage/>,
+
+      }
+      ,
+      {
+        path:"/clothes",
+        element:<Clothes/>,
+        errorElement:<ErrorPage/>,
+
+      },
+      {
+        path:"/electronics",
+        element:  <Electronics/>,
+        errorElement:<ErrorPage/>,
+
+      },
+      {
+        path:"/furniture",
+        element:<Furniture/>,
+        errorElement:<ErrorPage/>,
+
+      },
+      {
+        path:"/Miscellaneous",
+        element:<Miscellaneous/>,
+        errorElement:<ErrorPage/>,
+
+      },
+      {
+        path:"/Checkout",
+        element:<Checkout/>,
+        errorElement:<ErrorPage/>,
+
+      },
+      {
+        path:"/Login",
+        element:<Login/>,
+        errorElement:<ErrorPage/>,
+
+      },
+      {
+        path:"/signup",
+        element:<Signup/>,
         errorElement:<ErrorPage/>,
 
       }

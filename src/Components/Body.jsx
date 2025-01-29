@@ -1,8 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import ItemCard from "./ItemCard";
+import Header from "./Header";
 
 const Body = () => {
   const [ApiData, setApiData] = useState([]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const fetchData = async () => {
     const data = await fetch("https://api.escuelajs.co/api/v1/products");
@@ -10,14 +15,18 @@ const Body = () => {
     setApiData(json);
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+ 
 
   return (
-    <div>
-      <img src="" alt="" />
-      <ItemCard ApiData={ApiData} />
+    <div className="bg-white dark:bg-gray-900 min-h-screen text-gray-900 dark:text-gray-100">
+      <Header />
+      
+      <div className="p-2">
+        
+        <div className="p-2">
+          <ItemCard ApiData={ApiData} />
+        </div>
+      </div>
     </div>
   );
 };

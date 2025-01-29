@@ -2,30 +2,34 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { addItem } from "../utils/cartSlice";
+import Header from "./Header";
 
 const ItemPage = () => {
   const [finaldata, setFinalData] = useState([]);
   const { resId } = useParams();
+  const [Added, SetAdded] = useState(false);
 
   useEffect(() => {
     fetchdata();
-  }, []);
+  },[]);
 
   const dispatch = useDispatch();
   const handleAddItems = item => {
     dispatch(addItem(item));
+    SetAdded(true);
   };
 
   const fetchdata = async () => {
     const data = await fetch("https://api.escuelajs.co/api/v1/products");
     const json = await data.json();
 
-    const filteredData = json.filter(item => item.id == resId);
+    const filteredData = json.filter(item => item.id === resId);
     setFinalData(filteredData);
   };
 
   return (
-    <div>
+    <div className="bg-white dark:bg-gray-900 dark:text-white min-h-screen" >
+      <Header/>
       {finaldata.length > 0
         ? finaldata.map(item =>
             <div key={item.id} className="">
@@ -60,12 +64,16 @@ const ItemPage = () => {
                     ₹{item.price}
                   </div>
                   <div>
-                    <button
-                      onClick={() => handleAddItems(item)}
-                      className="my-2 mx-2 border-2 rounded-md bg-blue-950 text-white border-black "
-                    >
-                      Add to Cart
-                    </button>
+                    {!Added
+                      ? <button
+                          onClick={() => handleAddItems(item)}
+                          className="my-2 mx-2 border-2 rounded-md bg-blue-950 text-white border-black "
+                        >
+                          Add+
+                        </button>
+                      : <div className="text-green-600 font-bold p-2">
+                          Added ✓
+                        </div>}
                   </div>
                 </div>
               </div>

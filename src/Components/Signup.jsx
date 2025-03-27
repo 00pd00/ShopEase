@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../utils/firebase"; // Import auth from your firebase.js
 import { updateProfile } from "firebase/auth"; // Import updateProfile to update display name
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignupPage = () => {
   const [email, setEmail] = useState("");
@@ -26,7 +26,7 @@ const SignupPage = () => {
       });
 
       console.log("User signed up:", user);
-      navigate("/Login");
+      navigate("/");
   
     } catch (error) {
       console.error("Signup error:", error.message);
@@ -87,12 +87,12 @@ const SignupPage = () => {
         </form>
         <p className="text-center mt-4 dark:text-white text-gray-600">
           Already have an account?{" "}
-          <a
-            href="/login"
+          <Link
+            to={'/'}
             className="text-blue-500 font-medium hover:underline"
           >
             Login
-          </a>
+          </Link>
         </p>
       </div>
     </div>

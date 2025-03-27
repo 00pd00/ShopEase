@@ -1,13 +1,72 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { clearCart } from "../utils/cartSlice";
 import Header from "./Header";
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { db, auth } from "../utils/firebase";
 
 const Cart = () => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [groupedCart, setGroupedCart] = useState([]);
   const [variable, setvariable] = useState();
   const [showAlert, setShowAlert] = useState(false);
+
+  const [cartItems, setCartItems] = useState([]);
+
+  // const clearCart = async () => {
+  //   const user = auth.currentUser; // Get logged-in user
+  
+  //   if (!user) {
+  //     alert("Please log in first!");
+  //     return;
+  //   }
+  
+  //   const cartRef = doc(db, "cart", user.uid);
+  
+  //   try {
+  //     await updateDoc(cartRef, { cart: [] }); // Set cart to an empty array
+  //     alert("Cart has been cleared!");
+  //     setCartItems([])
+  //   } catch (error) {
+  //     console.error("Error clearing cart:", error);
+  //   }
+  // };
+
+
+    useEffect(() => {
+      const fetchCartItems = async () => {
+        const user = auth.currentUser;
+        if (!user) {
+          console.log("No user logged in");
+          return;
+        }
+  
+        console.log("Fetching cart for user:", user.uid);
+  
+        try {
+          const cartQuery = query(
+            collection(db, "cart"),
+            where("userId", "==", user.uid)
+          );
+          const cartSnapshot = await getDocs(cartQuery);
+  
+          if (cartSnapshot.empty) {
+            console.log("No cart items found");
+          }
+  
+          const cartData = cartSnapshot.docs.map(doc => doc.data());
+          console.log("Cart Data:", cartData);
+          setCartItems(cartData);
+        } catch (error) {
+          console.error("Error fetching cart items:", error);
+        }
+        
+      };
+  
+      fetchCartItems();
+    }, []);
+
+
+
+
 
   const togglepanel = () => {
     setvariable(!variable);
@@ -19,7 +78,7 @@ const Cart = () => {
     setTimeout(() => togglepanel(), 3000);
   };
 
-  const cart = useSelector(store => store.cart.items);
+  const cart = cartItems.map((k) => k.items )
 
   const groupCartItems = items => {
     const grouped = items.reduce((a, item) => {
@@ -51,10 +110,7 @@ const Cart = () => {
     [cart]
   );
 
-  const dispatch = useDispatch();
-  const handleClearCart = () => {
-    dispatch(clearCart());
-  };
+ 
 
   return (
     <div className="bg-white dark:bg-gray-900 dark:text-white">
@@ -89,12 +145,9 @@ const Cart = () => {
 
         {cart.length !== 0 &&
           <div className="flex">
-            <button
-              className="my-5 bg-[#272a32] text-white rounded-md"
-              onClick={handleClearCart}
-            >
+            {/* <button onClick={clearCart} >
               Clear Cart
-            </button>
+            </button> */}
             <div className="mx-5">
               <button className=" " onClick={togglepanel}>
                 {!variable

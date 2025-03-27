@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { browserLocalPersistence, setPersistence, signInWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../utils/firebase"; 
 
@@ -9,11 +9,16 @@ const LoginPage = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const handleLogin = async e => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     try {
+      // Set auth persistence
+      await setPersistence(auth, browserLocalPersistence);
+  
+      // Sign in user
       await signInWithEmailAndPassword(auth, email, password);
-      navigate("/");
+      
+      navigate("/home");
     } catch (err) {
       setError("Invalid email or password. Please try again.");
     }
@@ -36,6 +41,7 @@ const LoginPage = () => {
             <input
               type="email"
               id="email"
+              
               value={email}
               onChange={e => setEmail(e.target.value)}
               className="w-full px-3 py-2 border dark:text-black rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"

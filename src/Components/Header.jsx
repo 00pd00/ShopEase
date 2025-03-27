@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { auth } from "../utils/firebase";
 import { Menu, X } from "lucide-react";
 import Logo from "../Logo.webp";
+import { CiLight } from "react-icons/ci";
+import { CiDark } from "react-icons/ci";
 
 const Header = () => {
   const [categories, setcategories] = useState([]);
@@ -35,9 +37,12 @@ const Header = () => {
           <Link to="/">
             <img alt="ShopEase Logo" className="w-20 rounded-md" src={Logo} />
           </Link>
-          <Link to="/" className="text-2xl font-bold ml-3">
+          <Link to="/home" className="text-2xl font-bold ml-3">
             ShopEase
           </Link>
+          <div className="mx-10" >
+            hello
+          </div>
         </div>
 
         <nav className="hidden md:flex space-x-6">
@@ -51,15 +56,15 @@ const Header = () => {
         <div className="hidden md:flex items-center space-x-4">
           <button
             onClick={toggleDarkMode}
-            className="px-3 py-1 rounded hover:bg-gray-700"
+            className="px-3 py-1 rounded text-2xl hover:bg-gray-700"
           >
-            {DarkMode ? "Dark" : "Light"}
+            {DarkMode ? <CiDark/> : <CiLight/> }
           </button>
           <Link to="/cart" className="px-3 hover:underline">
-            Cart ({cart.length})
+            Cart 
           </Link>
           {username
-            ? <Link to="/Login" className="flex items-center">
+            ? <Link to="/" className="flex items-center">
                 <img
                   src="https://icon-library.com/images/profile-icon-white/profile-icon-white-1.jpg"
                   className="w-8 h-8 rounded-full"
@@ -104,7 +109,7 @@ const Header = () => {
             Cart ({cart.length})
           </Link>
           {username
-            ? <Link to="/Login" className="flex items-center space-x-2">
+            ? <Link to="/" className="flex items-center space-x-2">
                 <img
                   src="https://icon-library.com/images/profile-icon-white/profile-icon-white-1.jpg"
                   className="w-8 rounded-full"
@@ -114,7 +119,7 @@ const Header = () => {
                   {username.displayName}
                 </span>
               </Link>
-            : <Link to="/Signup" className="block hover:underline">
+            : <Link to="/signup" className="block hover:underline">
                 SignUp
               </Link>}
         </div>}

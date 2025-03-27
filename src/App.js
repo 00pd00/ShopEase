@@ -17,6 +17,10 @@ import Checkout from './Components/Checkout';
 import Login from './Components/Login';
 import Signup from './Components/Signup';
 import Footer from './Components/Footer';
+import AboutUs from './Components/AboutUs';
+import ContactUs from './Components/Contact';
+import ScrollToTopButton from './Components/ScrollToTop';
+import TestFirebase from './Components/TestFirebase';
 
 const App = () => {
   return (
@@ -24,6 +28,7 @@ const App = () => {
       <PersistGate persistor={persistor}>
         <div className="flex flex-col min-h-screen px-4 sm:px-6 lg:px-8">
           <Outlet />
+          <ScrollToTopButton/>
           <Footer />
         </div>
       </PersistGate>
@@ -38,7 +43,7 @@ const appRouter = createBrowserRouter([
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
-      { path: "/", element: <Body />, errorElement: <ErrorPage /> },
+      { path: "/home", element: <Body />, errorElement: <ErrorPage /> },
       { path: "/cart", element: <Cart />, errorElement: <ErrorPage /> },
       { path: "/itempage/:resId", element: <ItemPage />, errorElement: <ErrorPage /> },
       { path: "/item", element: <ItemCard />, errorElement: <ErrorPage /> },
@@ -48,8 +53,11 @@ const appRouter = createBrowserRouter([
       { path: "/furniture", element: <Furniture />, errorElement: <ErrorPage /> },
       { path: "/Miscellaneous", element: <Miscellaneous />, errorElement: <ErrorPage /> },
       { path: "/Checkout", element: <Checkout />, errorElement: <ErrorPage /> },
-      { path: "/Login", element: <Login />, errorElement: <ErrorPage /> },
-      { path: "/signup", element: <Signup />, errorElement: <ErrorPage /> }
+      { path: "/", element: <Login />, errorElement: <ErrorPage /> },
+      { path: "/About", element: <AboutUs />, errorElement: <ErrorPage /> },
+      { path: "/contact", element: <ContactUs />, errorElement: <ErrorPage /> },
+      { path: "/signup", element: <Signup />, errorElement: <ErrorPage /> },
+      { path: "/test", element: <TestFirebase />, errorElement: <ErrorPage /> }
     ]
   }
 ]);
